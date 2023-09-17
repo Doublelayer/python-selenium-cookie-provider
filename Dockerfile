@@ -9,13 +9,13 @@ RUN apt-get -y update
 # Magic happens
 RUN apt-get install chromium -y
 
+WORKDIR /app
 
 COPY requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt
 
 COPY . .
 
-WORKDIR /app
 #RUN pip install --upgrade pip
 
 

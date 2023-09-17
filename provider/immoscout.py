@@ -1,11 +1,10 @@
 import logging
+import sys
 
 from selenium.common import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-
-import undetected_chromedriver as uc
 
 logger = logging.getLogger(__name__)
 FORMAT = "[%(filename)s:%(lineno)s - %(funcName)20s() ] %(message)s"
@@ -14,6 +13,12 @@ logger.setLevel(logging.DEBUG)
 
 
 def write_immoscout_token():
+    platform = sys.platform
+    if platform.endswith("win32"):
+        import undetected_chromedriver as uc
+    else:
+        import undetected_chromedriver_armv7 as uc
+
     logger.debug("starting...")
     chrome_options = uc.ChromeOptions()
     chrome_options.add_argument("--headless")

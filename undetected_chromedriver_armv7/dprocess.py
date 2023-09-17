@@ -1,13 +1,13 @@
-import atexit
-import logging
 import multiprocessing
 import os
 import platform
-import signal
+import sys
 from subprocess import PIPE
 from subprocess import Popen
-import sys
-
+import atexit
+import traceback
+import logging
+import signal
 
 CREATE_NEW_PROCESS_GROUP = 0x00000200
 DETACHED_PROCESS = 0x00000008
@@ -44,6 +44,7 @@ def start_detached(executable, *args):
 
 
 def _start_detached(executable, *args, writer: multiprocessing.Pipe = None):
+
     # configure launch
     kwargs = {}
     if platform.system() == "Windows":
