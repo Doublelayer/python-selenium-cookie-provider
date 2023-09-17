@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest    
     env:      
       DOCKER_REGISTRY: hub.docker.com      
-      DOCKER_IMAGE: t0qo1y27igb4ee8tcvmg/flatler     
+      DOCKER_IMAGE: t0qo1y27igb4ee8tcvmg/cookie-provicer     
       DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}  
       DOCKER_TARGET_PLATFORM: linux/arm/v7                 
