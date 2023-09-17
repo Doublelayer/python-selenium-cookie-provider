@@ -1,0 +1,35 @@
+
+name: Docker Build/Publish Image 
+on:  
+  push:    
+    branches: [ main ]  
+jobs:   
+  build:    
+    runs-on: ubuntu-latest    
+    env:      
+      DOCKER_REGISTRY: hub.docker.com      
+      DOCKER_IMAGE: t0qo1y27igb4ee8tcvmg/flatler     
+      DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}  
+      DOCKER_TARGET_PLATFORM: linux/arm/v7                 
+    steps:    
+    - 
+      name: Checkout the code       
+      uses: actions/checkout@v1
+    - 
+      name: Set up Docker Buildx      
+      uses: crazy-max/ghaction-docker-buildx@v1      
+      with:        
+        version: latest   
+    - 
+      name: Login to Docker Hub
+      if: success()      
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - 
+      name: Run Buildx (push image)      
+      if: success()      
+      run: |        
+        docker buildx build --platform linux/arm/v7 --tag t0qo1y27igb4ee8tcvmg/cookie-provicer:latest --file ./Dockerfile --output type=image,push=true .
